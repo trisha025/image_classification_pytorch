@@ -22,5 +22,5 @@ transform = transforms.Compose([
 ])
 
 #import image
-#img = Image.open("cat.jpg")
-#img.show()
+img = Image.open("cat.jpg")
+img.show()
