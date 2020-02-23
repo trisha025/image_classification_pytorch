@@ -23,8 +23,22 @@ transform = transforms.Compose([
 
 #import image and pre-processing
 img = Image.open("cat.jpg")
-img.show()
+#img.show()
 
 img_t = transform(img)
-batch_t = torch.unsqueez(img_t, 0)
+batch_t = torch.unsqueeze(img_t, 0)
+
 alexnet.eval()
+
+out = alexnet(batch_t)
+print(out.shape)
+
+with open('imagenet_classes.txt') as f:
+    classes = [line.strip() for line in f.readlines()]
+
+_, index = torch.max(out,1)
+percentage = torch.nn.functional.softmax(out, dim=1)[0]*100
+print(classes[index[0]], percentage[index[0]].item())
+
+_, indices = torch.sort(out, descending=True)
+print([(classes[idx], percentage[idx].item()) for idx in indices[0][:5]]) 
