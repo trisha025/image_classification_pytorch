@@ -21,6 +21,10 @@ transform = transforms.Compose([
     )
 ])
 
-#import image
+#import image and pre-processing
 img = Image.open("cat.jpg")
 img.show()
+
+img_t = transform(img)
+batch_t = torch.unsqueez(img_t, 0)
+alexnet.eval()
