@@ -6,7 +6,7 @@ from PIL import Image
 
 dir(models)
 
-#loading the model
+#loading the model (alexnet)
 alexnet = models.alexnet(pretrained=True)
 print(alexnet)
 
@@ -42,3 +42,14 @@ print(classes[index[0]], percentage[index[0]].item())
 
 _, indices = torch.sort(out, descending=True)
 print([(classes[idx], percentage[idx].item()) for idx in indices[0][:5]]) 
+
+#resnet
+resnet = models.resnet101(pretrained=True)
+
+resnet.eval()
+
+out = resnet(batch_t)
+
+_, indices = torch.sort(out, descending=True)
+percentage = torch.nn.functional.softmax(out, dim=1)[0]*100
+print([(classes[idx], percentage[idx].item()) for idx in indices[0][:5]])
